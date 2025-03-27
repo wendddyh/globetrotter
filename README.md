@@ -1,22 +1,43 @@
-# Welcome to React Router!
+# Welcome to 🌍 GlobeTrotter
 
-A modern, production-ready template for building full-stack React applications using React Router.
+**Collect your country stamp virtually.**
+Discover, learn, and travel the world from your browser — one country at a time.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+GlobeTrotter is a fun, colorful React project designed to let users explore countries, search by name, filter by region, and (soon) collect virtual passport stamps by completing quizzes. The goal? Learn geography, culture, and landmarks while visually traveling the globe.
 
-## Features
+---
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## ✨ Features
+
+- 🔎 **Search & Filter** countries by name or region
+- 🌐 **REST Countries API** integration
+- 🧭 **Dynamic Routing** with `react-router@7`
+- 🎨 **Fun UI with Tailwind CSS** — bright, bold, and responsive
+- 🌄 **Custom Hero section** with SVG transitions and illustrations
+- 🖼️ **Country cards** with OpenMoji SVG illustrations (instead of flags!)
+- 🗺️ Future: **Quiz + Stamp system** to build your virtual passport
+
+## 🛠 Tech Stack
+
+| Tech            | Purpose                          |
+|-----------------|----------------------------------|
+| React + TypeScript | Frontend app structure         |
+| React Router v7 App Router | File-based routing and dynamic paths |
+| Tailwind CSS    | Styling and responsive layout    |
+| REST Countries API | Real country data              |
+| OpenMoji        | SVG icons as fun country visuals |
+
+---
 
 ## Getting Started
 
 ### Installation
+
+Clone the repo:
+```bash
+git clone https://github.com/yourusername/globetrotter.git
+cd globetrotter
+```
 
 Install the dependencies:
 
@@ -25,8 +46,6 @@ npm install
 ```
 
 ### Development
-
-Start the development server with HMR:
 
 ```bash
 npm run dev
@@ -42,41 +61,6 @@ Create a production build:
 npm run build
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
 
 ## Styling
 
@@ -84,4 +68,4 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 
 ---
 
-Built with ❤️ using React Router.
+SVGs provided by OpenMoji, licensed under CC BY-SA 4.0
