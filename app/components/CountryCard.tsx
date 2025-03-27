@@ -1,19 +1,28 @@
-import React from 'react'
+import { Link } from "react-router";
+import type { Country } from "~/types/countryType";
 
-const CountryCard = () => {
+interface CountryCardProps {
+  countries: Country;
+}
+export default function CountryCard({countries}: CountryCardProps) {
+
   return (
-    <>
-      <div className='relative pd-10 flex flex-col bg-white border border-black'>
-        <div className=''>
-          <img src=' '/>
+
+      <div className='flex justify-center px-5 pt-5'>
+        <div className="h-fit my-3 rounded-xl overflow-hidden border border-gray-200 bg-[#ffffff] relative">
+          <div className="text-4xl mb-2">
+            <img src={countries.flags.png}></img>
+          </div>
+          <div className='p-4 mt-2 mb-2 px-3'>
+            <div className='font-semibold'>{countries.name.common}</div>
+            <p className="text-slate-600 leading-normal font-light">Capital: {countries.capital}</p>
+            <a href= {`/country/${countries.cca3}`}>
+              See More
+            </a>
+          </div>
         </div>
-        <div className='p-4'>
-          <h5 className='mb-2 text-slate-800 text-xl font semi-bold'>SPAIN</h5>
-          <p className="text-slate-600leading-normal font-light">Churros</p>
-        </div>
+
       </div>
-    </>
+
   )
 }
-
-export default CountryCard
