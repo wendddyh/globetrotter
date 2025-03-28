@@ -12,12 +12,16 @@ export default function SearchBar({searchCountry, setSearchCountry}: SearchBarPr
     setSearchCountry(event.target.value);
   }
 
+  const scrollToResults = () => {
+    document.getElementById("results")?.scrollIntoView({behavior: "smooth"});
+  }
+
   return (
     <>
-    <div className="flex items-center gap-4 mb-6">
+    <div className="flex items-center gap-4 mb-2 mt-10">
       <label htmlFor="search" className="text-lg font-medium whitespace-nowrap">Let's travel to:</label>
-          <form onSubmit={(e) => e.preventDefault()} className="flex items-center gap-2">
-            <input className="rounded-full sm:w-20px bg-white text-gray-800 px-4 py-2 rounded-md border border-gray-300 placeholder:text-slate-400 focus:ring focus:outline-none"
+          <form onSubmit={(e) => { e.preventDefault(); scrollToResults()}} className="flex items-center gap-2">
+            <input className="rounded-full bg-white text-gray-800 px-3 py-2 rounded-md border border-gray-300 placeholder:text-slate-400 focus:ring focus:outline-none"
                   type="text"
                   value={searchCountry}
                   onChange={handleChange}

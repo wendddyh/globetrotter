@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { fetchCountries } from "~/api/CountryList";
 import type { Country } from "~/types/countryType";
 import { Link } from "react-router";
+import ExploreSection from "~/components/ExploreSection";
 
 
 export function meta({}: Route.MetaArgs) {
@@ -56,13 +57,18 @@ export default function Home() {
     setSelectedRegion([])
   }
 
-
   const filteredCountries = countries.filter((country) => {
     const matchedRegion = selectedRegion.length === 0 || selectedRegion.includes(country.region)
     const searchedCountry = country.name.common.toLowerCase().includes(search.toLowerCase())
 
     return matchedRegion && searchedCountry
   })
+
+  const hasSearchedOrFilter= search.trim() !== "" || selectedRegion.length > 0;
+
+  console.log(filteredCountries.length)
+  const totalCountry = countries.length;
+  const totalRegion = new Set(countries.map(country => country.region)).size;
 
   return (
     <>
@@ -74,35 +80,63 @@ export default function Home() {
         </div>
 
         <div className='pt-[15%]'>
-          <h2 className='text-3xl md:text-2xl font-bold text-orange-600 mb-3'>
-            COLLECT YOUR STAMP VIRTUALLY
+          <h2 className='text-5xl font-bold font-cartoon text-orange-600 mb-3'>
+            COLLECT YOUR STAMP VIRTUALLY,
           </h2>
 
-          <p className='text-md md:text-xl font-semibold text-gray-500 mb-6 max-w-md mx-auto'>
+          <p className='text-[30px] font-semibold text-gray-500 mb-6 max-w-md mx-auto'>
             Discover, learn and collect your travel stamp from every country
           </p>
 
-          <div className='flex items-center justify-center gap-2 mb-5'>
+          <p className="text-2xl text-gray-600 test-slate-600">
+          🌍 {totalCountry} countries  | 🗺️ {totalRegion} regions
+          </p>
+
+          <div className='flex flex-wrap items-center justify-center'>
             <SearchBar searchCountry={search} setSearchCountry={setSearch} />
           </div>
 
           <div className='bottom-0 left-0 z-0'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffbd59" fill-opacity="1" d="M0,256L48,234.7C96,213,192,171,288,154.7C384,139,480,149,576,154.7C672,160,768,160,864,138.7C960,117,1056,75,1152,80C1248,85,1344,139,1392,165.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
-          <img className="absolute bottom-40 right-[35%] w-[15%]" src={travelman} alt="travel man"></img>
-          <img className="absolute bottom-11 right-[11%] w-[20%]" src={travellady} alt="travel lady"></img>
+          <img className="absolute bottom-30 right-[35%] w-[18%]" src={travelman} alt="travel man"></img>
+          <img className="absolute bottom-16 right-[11%] w-[20%]" src={travellady} alt="travel lady"></img>
           <img className="absolute bottom-30 left-[12%] w-[15%]" src={suitcaselady} alt="suitcase lady"></img>
-          <img className="absolute bottom-20 left-[35%] w-[15%]" src={couplebike} alt="travel man"></img>
+          <img className="absolute bottom-52 left-[35%] w-[11%]" src={couplebike} alt="travel man"></img>
           </div>
         </div>
       </div>
       <div>
         <div>
-          <Filter regions={region} selected={selectedRegion} onAdd={addRegion} onRemove={removeRegion} onReset={resetRegion} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 bg-[#fff0dc] relative text-center">
-            {filteredCountries.map((country) => (
-            <CountryCard countries={country} />
-            ))}
+          <div>
+            <ExploreSection country={countries} />
           </div>
+          <div className='items-center justify-center'>
+            <Filter regions={region} selected={selectedRegion} onAdd={addRegion} onRemove={removeRegion} onReset={resetRegion} />
+          </div>
+
+          <section id="results" className="py-10 justify-items-center text-center">
+            {/* no search or filter applied */}
+            {!hasSearchedOrFilter &&  (
+              <div className="bg-[#fff0dc] p-[90px]">
+                <p className="text-lg font-medium whitespace-nowrap">Ready to explore?</p>
+                <p className="text-lg font-medium whitespace-nowrap">Use the search bar or pick the region to begin your journey</p>
+              </div>
+            )}
+
+            {/* if the search or filter applied */}
+            {hasSearchedOrFilter && filteredCountries.length > 0 && (
+            <>
+              <p className="text-lg font-medium whitespace-nowrap">Showing {filteredCountries.length} country(ies) {search && `for "${search}"`} {selectedRegion.length > 0 && `in ${selectedRegion.join(", ")}`}
+              </p>
+
+              <div className="p-[60px] grid grid-cols-4 md:grid-cols-4 sm:grid-cols-3 gap-4 justify-center bg-[#fff0dc] relative text-center">
+                {filteredCountries.map((country) => (<CountryCard countries={country} />))}
+              </div>
+
+            </>
+            )}
+
+          </section>
         </div>
       </div>
     </>

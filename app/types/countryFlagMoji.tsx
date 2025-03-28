@@ -1,5 +1,5 @@
 export const countryFlagMoji: Record<string, string> = {
-  CHE: "app/welcome/flagsEmoji/switzerland.svg"
+  CHE: "😋"
 };
 
 export function getCountryFlagMoji(cca3: string): string {

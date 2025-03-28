@@ -12,19 +12,21 @@ export default function Filter({regions, selected, onAdd, onRemove, onReset} : F
   const regionToggle = ((region: string) => selected.includes(region) ? onRemove(region): onAdd(region) )
   return (
     <>
-        <div className="justify-center gap-2 flex flex-wrap w-full pt-[5%] pb-[5%] align-center bg-[#ffbd59]">
+        <div className="justify-items-center gap-3 w-full pt-[2%] pb-[2%] align-center ">
           <h2 className="text-lg font-semibold text-brown-990 mb-4"> I want to see the country by region:</h2>
-          {regions.map((region) => (
-            <button key={region} onClick={(() => regionToggle(region))}
-              className={`px-4 py-1 rounded-full bg-orange-500 text-white text-sm font-medium transition-all duration-200
-              border border-yellow-400 hover:bg-orange-400 transition ${selected.includes(region) ? 'bg-blue-400 text-white shadow-md' : 'bg-orange-500 text-white'}`}>{region}
-            </button>
-          ))}
+          <div>
+            {regions.map((region) => (
+              <button key={region} onClick={(() => regionToggle(region))}
+                className={`px-4 py-1 rounded-full gap-3 bg-orange-500 text-white text-sm font-medium transition-all duration-200
+                border border-yellow-400 hover:bg-orange-400 transition ${selected.includes(region) ? 'bg-pink-400 text-white shadow-md' : 'bg-orange-500 text-white'}`}>{region}
+              </button>
+            ))}
           {selected.length > 0 && (
-            <button onClick={onReset} className="mt-4 text-sm bg-white text-red-300 underline hover:text-red-500">
+            <button onClick={onReset} className="ml-[2px] p-[3px] text-sm bg-red-500 rounded text-white hover:text-black">
               Clear all filters
             </button>
           )}
+          </div>
         </div>
     </>
   )
