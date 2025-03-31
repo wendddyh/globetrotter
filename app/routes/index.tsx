@@ -85,12 +85,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='pt-[15%]'>
-          <h2 className='text-5xl font-bold font-cartoon text-orange-600 mb-3'>
+        <div className='lg:pt-[15%] md:pt-[30%] sm:pt-[80%]'>
+          <h2 className='lg:text-4xl md:text-3xl s:text-s font-bold font-cartoon text-orange-600 mb-3'>
             COLLECT YOUR VIRTUAL TRAVEL STAMPS,
           </h2>
 
-          <p className='text-[30px] font-semibold text-gray-500 mb-5 w-[40%] mx-auto'>
+          <p className='lg:text-3xl md:text-2xl sm:text-s font-semibold text-gray-500 mb-5 w-[40%] mx-auto'>
           ✈️ Discover, learn and collect your travel stamp from every country
           </p>
 
@@ -117,7 +117,7 @@ export default function Home() {
       </div>
       <div>
         <div>
-          <div>
+          <div className="justify-items-center">
             <ExploreSection country={countries} />
           </div>
 
@@ -125,7 +125,7 @@ export default function Home() {
             {/* no search or filter applied */}
             {!hasSearchedOrFilter &&  (
               <div className="bg-[#fff0dc] p-[90px]">
-                <p className="text-lg font-medium whitespace-nowrap">Ready to explore?</p>
+                <p className="lg:text-lg md:text:md sm:text-sm font-medium whitespace-nowrap">Ready to explore?</p>
                 <p className="text-lg font-medium whitespace-nowrap">Use the search bar or pick the region to begin your journey</p>
               </div>
             )}
