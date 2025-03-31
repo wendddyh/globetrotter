@@ -27,6 +27,8 @@ export default function CountryDetail() {
         <h1 className="text-3xl font-semibold mb-4">{country.name.common}</h1>
         <img src={country.flags.png} alt={`Flag of ${country.name.common}`}></img>
         <p>Capital: {country.capital}</p>
+        <p>Population: {country.population}</p>
+        <p>Language: {country.language}</p>
         <a href ="/">Back to home</a>
       </div>
 

@@ -1,11 +1,13 @@
-import { Link } from "react-router";
+
+import { useEffect, useState } from "react";
+import { fetchLandmark } from "~/api/landmark";
 import type { Country } from "~/types/countryType";
+
 
 interface CountryCardProps {
   countries: Country;
 }
 export default function CountryCard({countries}: CountryCardProps) {
-
   return (
 
       <div className='justify-items-center px-5 pt-5'>
@@ -14,9 +16,11 @@ export default function CountryCard({countries}: CountryCardProps) {
             <img className= "h-full object-cover border-[3px] border-black-300 w-[80%]" src={countries.flags.png}></img>
           </div>
           <div className='p-4 mt-2 mb-2 px-3'>
-            <div className='font-semibold'>{countries.name.common}</div>
+            <div className="mb-3">
+            <h3>{countries.name.common}</h3>
             <p className="text-slate-600 leading-normal font-light">Capital: {countries.capital}</p>
-            <a href= {`/country/${countries.cca3}`} className="border bg-orange-300 p-px my-3 rounded-l ">
+            </div>
+            <a href= {`/country/${countries.cca3}`} className="border bg-orange-300 p-[3px]  my-3 rounded-l ">
               I'm travelling
             </a>
           </div>

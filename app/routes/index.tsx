@@ -7,13 +7,11 @@ import couplebike from '../welcome/undraw_traveling_c18z.svg'
 import SearchBar from "~/components/SearchBar";
 import Filter from "~/components/Filter";
 import CountryCard from "~/components/CountryCard";
-import Navbar from "~/components/Navbar";
 import { useEffect, useState } from "react";
 import { fetchCountries } from "~/api/CountryList";
 import type { Country } from "~/types/countryType";
-import { Link } from "react-router";
 import ExploreSection from "~/components/ExploreSection";
-
+import { useAutoScrollTo } from "~/hooks/useAutoScrollTo";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -28,6 +26,7 @@ export default function Home() {
   const [countries, setCountries] = useState<Country[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('');
+  const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
 
   useEffect(() => {
     fetchCountries()
@@ -43,6 +42,12 @@ export default function Home() {
 
     }, [])
 
+    useEffect(() => {
+      if (isSearchSubmitted) {
+        setIsSearchSubmitted(false)
+      }
+    },[isSearchSubmitted]);
+
   const addRegion = (region: string) => {
     if(!selectedRegion.includes(region)){
       setSelectedRegion(prev => ([...prev, region]))
@@ -57,6 +62,8 @@ export default function Home() {
     setSelectedRegion([])
   }
 
+  const scrollRef = useAutoScrollTo([selectedRegion, isSearchSubmitted])
+
   const filteredCountries = countries.filter((country) => {
     const matchedRegion = selectedRegion.length === 0 || selectedRegion.includes(country.region)
     const searchedCountry = country.name.common.toLowerCase().includes(search.toLowerCase())
@@ -66,7 +73,6 @@ export default function Home() {
 
   const hasSearchedOrFilter= search.trim() !== "" || selectedRegion.length > 0;
 
-  console.log(filteredCountries.length)
   const totalCountry = countries.length;
   const totalRegion = new Set(countries.map(country => country.region)).size;
 
@@ -81,11 +87,11 @@ export default function Home() {
 
         <div className='pt-[15%]'>
           <h2 className='text-5xl font-bold font-cartoon text-orange-600 mb-3'>
-            COLLECT YOUR STAMP VIRTUALLY,
+            COLLECT YOUR VIRTUAL TRAVEL STAMPS,
           </h2>
 
-          <p className='text-[30px] font-semibold text-gray-500 mb-6 max-w-md mx-auto'>
-            Discover, learn and collect your travel stamp from every country
+          <p className='text-[30px] font-semibold text-gray-500 mb-5 w-[40%] mx-auto'>
+          ✈️ Discover, learn and collect your travel stamp from every country
           </p>
 
           <p className="text-2xl text-gray-600 test-slate-600">
@@ -93,7 +99,11 @@ export default function Home() {
           </p>
 
           <div className='flex flex-wrap items-center justify-center'>
-            <SearchBar searchCountry={search} setSearchCountry={setSearch} />
+            <SearchBar searchCountry={search} setSearchCountry={setSearch} onSearchSubmit={() => setIsSearchSubmitted(true)} />
+          </div>
+
+          <div className='items-center justify-center'>
+            <Filter regions={region} selected={selectedRegion} onAdd={addRegion} onRemove={removeRegion} onReset={resetRegion} />
           </div>
 
           <div className='bottom-0 left-0 z-0'>
@@ -110,11 +120,8 @@ export default function Home() {
           <div>
             <ExploreSection country={countries} />
           </div>
-          <div className='items-center justify-center'>
-            <Filter regions={region} selected={selectedRegion} onAdd={addRegion} onRemove={removeRegion} onReset={resetRegion} />
-          </div>
 
-          <section id="results" className="py-10 justify-items-center text-center">
+          <section ref={scrollRef} id="results" className="py-10 justify-items-center text-center">
             {/* no search or filter applied */}
             {!hasSearchedOrFilter &&  (
               <div className="bg-[#fff0dc] p-[90px]">
@@ -128,6 +135,14 @@ export default function Home() {
             <>
               <p className="text-lg font-medium whitespace-nowrap">Showing {filteredCountries.length} country(ies) {search && `for "${search}"`} {selectedRegion.length > 0 && `in ${selectedRegion.join(", ")}`}
               </p>
+              {(selectedRegion.length > 0 || search.trim() !== '') && (
+              <button onClick={() => {
+                setSearch('')
+                setSelectedRegion([]);
+              }}
+              className="ml-[2px] p-[3px] text-sm bg-red-500 rounded text-white hover:text-black mt-2 mb-5">Clear all filters
+              </button>
+            )}
 
               <div className="p-[60px] grid grid-cols-4 md:grid-cols-4 sm:grid-cols-3 gap-4 justify-center bg-[#fff0dc] relative text-center">
                 {filteredCountries.map((country) => (<CountryCard countries={country} />))}

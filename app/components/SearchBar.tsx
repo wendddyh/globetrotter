@@ -1,26 +1,22 @@
-import { X, Earth } from "lucide-react";
 import type { ChangeEvent } from "react";
 
 interface SearchBarProps {
   searchCountry: string;
-  setSearchCountry: (value: string) => void
+  setSearchCountry: (value: string) => void;
+  onSearchSubmit: () => void
 }
 
-export default function SearchBar({searchCountry, setSearchCountry}: SearchBarProps) {
+export default function SearchBar({searchCountry, setSearchCountry, onSearchSubmit}: SearchBarProps) {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchCountry(event.target.value);
-  }
-
-  const scrollToResults = () => {
-    document.getElementById("results")?.scrollIntoView({behavior: "smooth"});
   }
 
   return (
     <>
     <div className="flex items-center gap-4 mb-2 mt-10">
       <label htmlFor="search" className="text-lg font-medium whitespace-nowrap">Let's travel to:</label>
-          <form onSubmit={(e) => { e.preventDefault(); scrollToResults()}} className="flex items-center gap-2">
+          <form onSubmit={(e) => {e.preventDefault(); onSearchSubmit()}} className="flex items-center gap-2">
             <input className="rounded-full bg-white text-gray-800 px-3 py-2 rounded-md border border-gray-300 placeholder:text-slate-400 focus:ring focus:outline-none"
                   type="text"
                   value={searchCountry}

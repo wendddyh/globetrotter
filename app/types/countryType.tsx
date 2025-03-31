@@ -4,7 +4,10 @@ export interface Country
     common: string;
     official: string
   };
-  currency:string;
+  currency:{
+    name: string;
+    symbol: string
+  };
   language: string[];
   flags:{
     png: string;
